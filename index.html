@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Love Me?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .no-btn {
+            background: #ff6b6b;
+            color: white;
+            position: relative;
+        }
+
+        .no-btn:hover {
+            background: #ff5252;
+        }
+
+        .gif-container {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .gif-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .gif-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 1.5em;
+            color: #667eea;
+            font-weight: bold;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Do You Love Me? 💕</h1>
+        <div class="buttons">
+            <button class="yes-btn" id="yesBtn">Yes</button>
+            <button class="no-btn" id="noBtn">No</button>
+        </div>
+        <div class="gif-container" id="gifContainer">
+            <img id="gifImage" src="" alt="Love GIF">
+        </div>
+        <div class="message" id="message">Yay! I love you too! 💖</div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const gifContainer = document.getElementById('gifContainer');
+        const gifImage = document.getElementById('gifImage');
+        const message = document.getElementById('message');
+
+        // Replace this URL with your Giphy GIF URL
+        // To get a Giphy URL: Go to giphy.com, find a GIF, click "Copy Link", and paste the URL here
+        const giphyUrl = 'https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif';
+
+        // Make the "No" button run away when hovered
+        noBtn.addEventListener('mouseenter', function() {
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            const buttonRect = noBtn.getBoundingClientRect();
+            
+            // Get random position within the viewport
+            const maxX = window.innerWidth - buttonRect.width - 50;
+            const maxY = window.innerHeight - buttonRect.height - 50;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            // Position the button absolutely
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.zIndex = '1000';
+        });
+
+        // Handle "Yes" button click
+        yesBtn.addEventListener('click', function() {
+            gifImage.src = giphyUrl;
+            gifContainer.classList.add('show');
+            message.classList.add('show');
+            
+            // Hide the buttons
+            yesBtn.style.display = 'none';
+            noBtn.style.display = 'none';
+        });
+
+        // Prevent clicking "No" by moving it on click attempt
+        noBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const buttonRect = noBtn.getBoundingClientRect();
+            const maxX = window.innerWidth - buttonRect.width - 50;
+            const maxY = window.innerHeight - buttonRect.height - 50;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        });
+    </script>
+</body>
+</html>
